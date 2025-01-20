@@ -7,15 +7,8 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 5000;
 
-// CORS configuration
-const corsOptions = {
-  origin: 'https://sujalschantbot.netlify.app', // Allow only this domain to access your backend
-  methods: ['GET', 'POST', 'OPTIONS'], // Add OPTIONS method for pre-flight
-  allowedHeaders: ['Content-Type'], // Allowed headers
-};
-
 // Enable CORS for your Netlify frontend domain
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Middleware to parse JSON request bodies
 app.use(bodyParser.json());
@@ -38,14 +31,14 @@ db.connect((err) => {
 });
 
 // Create messages table if it doesn't exist
-db.query(`
+db.query(
   CREATE TABLE IF NOT EXISTS messages (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user VARCHAR(255) NOT NULL,
     message TEXT NOT NULL,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   )
-`, (err) => {
+, (err) => {
   if (err) {
     console.error('Error creating table:', err.stack);
   }
@@ -104,5 +97,5 @@ app.get('/messages', (req, res) => {
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+  console.log(Server running on http://localhost:${port});
 });
