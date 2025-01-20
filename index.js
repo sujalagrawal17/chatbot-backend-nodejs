@@ -7,12 +7,15 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 5000;
 
-// Enable CORS for your Netlify frontend domain
-app.use(cors({
+// CORS configuration
+const corsOptions = {
   origin: 'https://sujalschantbot.netlify.app', // Allow only this domain to access your backend
-  methods: ['GET', 'POST'], // Allowed HTTP methods
+  methods: ['GET', 'POST', 'OPTIONS'], // Add OPTIONS method for pre-flight
   allowedHeaders: ['Content-Type'], // Allowed headers
-}));
+};
+
+// Enable CORS for your Netlify frontend domain
+app.use(cors(corsOptions));
 
 // Middleware to parse JSON request bodies
 app.use(bodyParser.json());
